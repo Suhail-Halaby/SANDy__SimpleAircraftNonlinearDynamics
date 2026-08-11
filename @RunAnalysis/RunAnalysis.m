@@ -48,8 +48,8 @@ classdef RunAnalysis < handle
         [F, M, Cf, Cm, Cw]              = CoefficientSweep(obj, U_inf, Angle, Range, opts)
         [A, x_e, f_e, As, Aa]           = SystemJacobian(obj, u_e, alpha_e, theta_e, ctrl_e, opts)
         [B, x_e, f_e, Bs, Ba]           = CtrlJacobian(obj, u_e, alpha_e, theta_e, ctrl_e, opts)
-        [ctrlTrim, A, B, resNorm, f_e, As, Bs, Aa, Ba] = ...
-            TrimSolve(obj, allocSurf, u_e, alpha_e, theta_e, ctrl_e, solveOpts, linOpts)
+        [ctrlTrim, vTrim, resNorm, f_e, exitflag, A, B, As, Bs, Aa, Ba] = ...
+            TrimSolve(obj, allocSurf,u_e, theta_e, ctrl_e, mixOpts, solveOpts, linOpts, satOpts)
         C                               = Controllability(obj, A, B, opts)
     end
 

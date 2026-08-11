@@ -55,7 +55,9 @@ if isfield(plane, 'addedInertia') && ~isempty(plane.addedInertia)
     ai  = plane.addedInertia;
     CG  = (Mass * CG + ai.Mass * ai.MassLoc) / (Mass + ai.Mass);
     Mass = Mass + ai.Mass;
-    Iv   = Iv + ai.Iv;
+
+    d  = ai.MassLoc - CG;
+    Iv = Iv + ai.Iv + ai.Mass * ((d.'*d)*eye(3) - d*d.');
 end
 
 %% 4. Apply prop thrust (mount geometry + inflow both change with tilt/speed)
